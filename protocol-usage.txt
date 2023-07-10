@@ -1,7 +1,7 @@
-const london = new City('london', 'metric')
-const london = new City('london', 'imperial')
-const london = new City('39.12', '39.12')
-const london = City.from({ name: 'london', ... });
+const london = new BuildCity('london', 'metric')
+const london = new BuildCity('london', 'imperial')
+const london = new BuildCity('39.12', '39.12')
+const london = BuildCity.from({ name: 'london', ... });
 
 City = {
     name: <city>,
