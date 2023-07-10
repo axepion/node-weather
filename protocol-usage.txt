@@ -1,0 +1,11 @@
+const london = new City('london', 'metric')
+const london = new City('london', 'imperial')
+const london = new City('39.12312123', '39.123123123')
+const london = City.from({ name: 'london', ... });
+
+City = {
+    name: <city>,
+    coordinates: [lat, long],
+    temperature: '+15.3',
+    ...
+}
