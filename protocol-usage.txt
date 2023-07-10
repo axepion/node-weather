@@ -1,6 +1,6 @@
 const london = new City('london', 'metric')
 const london = new City('london', 'imperial')
-const london = new City('39.12312123', '39.123123123')
+const london = new City('39.12', '39.12')
 const london = City.from({ name: 'london', ... });
 
 City = {
