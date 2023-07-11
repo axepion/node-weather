@@ -3,6 +3,8 @@
 const http = require('node:http');
 const { keyAPI } = require('./config.js');
 
+
+
 class MetaCity {
     constructor(...args) {
         this._url = 'http://api.openweathermap.org/data/2.5/weather?';
@@ -24,13 +26,23 @@ class MetaCity {
                 this.longitude = args[1];
                 this.url = this._url + `lat=${this.latitude}&lon=${this.longitude}` + this._parameters['api'];
             } else {
-                throw Error('Incorrect use of the class BuildCity')
+                throw Error('Incorrect use of the class MetaCity')
             };
         }
-
-        
     };
+
+    async getWeather() {
+        class City {
+            constructor(data) {
+                this.data = data;
+            }
+        }
+        const object = await fetchWeather(this.url)
+        return new City(object)
+    }
 };
+
+
 
 const fetchWeather = (url) => new Promise((resolve, reject) => {
     http.get(url, (res) => {
@@ -57,12 +69,13 @@ const fetchWeather = (url) => new Promise((resolve, reject) => {
     })
 });
 
-const getWeather = (metaCity) => {
-    
-    fetchWeather(url);
-}
 
+(async () => {
 
-const kirov = new MetaCity('Kirov');
+    const kirov = new MetaCity('Kirov');
+    const moscow = new MetaCity('Moscow');
+    const moscowWeather = await moscow.getWeather();
+    const kirovWeather = await kirov.getWeather();
+    console.log(moscowWeather)
 
-console.log(kirov);
+})();
