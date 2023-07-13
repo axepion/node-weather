@@ -3,47 +3,6 @@
 const http = require('node:http');
 const { keyAPI } = require('./config.js');
 
-class MetaCity {
-    constructor(unit, ...args) {
-        this._url = 'http://api.openweathermap.org/data/2.5/weather?';
-
-        if (unit !== 'metric' && unit !== 'imperial') {
-            throw new Error('Invalid unit');
-        }
-        
-        this._parameters = {
-            name: 'q=',
-            unit: `&units=${unit}`,
-            api: `&appid=${keyAPI}`,
-        };
-
-        if (args.length > 2 || args.length === 0) throw Error('Invalid number of arguments');
-
-        if (typeof args[0] === 'string') {
-            this.name = args[0]
-            this.url = this._url + this._parameters.name + args[0] + this._parameters.api + this._parameters.unit;
-        }
-        else {
-            if (typeof args[0] === 'number' && typeof args[1] === 'number') {
-                this.latitude = args[0];
-                this.longitude = args[1];
-                this.url = this._url + `lat=${this.latitude}&lon=${this.longitude}` + this._parameters.api + this._parameters.unit;
-            } else {
-                throw Error('Incorrect use of the class MetaCity')
-            };
-        }
-    };
-
-    async getWeather() {
-        class Weather {
-            constructor(data) {
-                this.data = data;
-            }
-        }
-        const object = await fetchWeather(this.url)
-        return new Weather(object)
-    }
-};
 
 
 class City {  
