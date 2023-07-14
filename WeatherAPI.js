@@ -1,6 +1,25 @@
 'use strict';
 
+const http = require('node:http');
+
 const { keyAPI } = require('./config.js');
+
+const getWeatherAsync = (url) => new Promise((resolve, reject) => {
+    const chunks = [];
+    http.get(url, (res) => {
+        res.on('data', (chunk) => {
+            chunks.push(chunk);
+        })
+        res.on('end', () => {
+            const data = Buffer.concat(chunks).toString();
+            const result = JSON.parse(data);
+            resolve(result);
+        })
+        res.on('err', (err) => {
+            reject(err);
+        });
+    });
+});
 
 const parameters = {
     name: 'q=',
@@ -35,6 +54,15 @@ class WeatherAPI {
         Object.assign(this, object);
     }
 
+    async getWeather() { 
+        try {
+            const weather = await getWeatherAsync(this.url)
+            this.data = weather;
+        } catch (error) {
+            throw new Error(error);
+        }
+    }
+
 };
 
-module.exports = { WeatherAPI };
+module.exports = { WeatherAPI }
